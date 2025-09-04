@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        options:
+          # Optional: Configure Freezed options
+          # fallbackUnion: true
+          # unionKey: 'type'
+          # unionValueCase: FreezedUnionCase.camel
+      json_serializable:
+        options:
+          # Optional: Configure JSON serialization options
+          # explicit_to_json: true
+          # field_rename: FieldRename.snake
