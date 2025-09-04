@@ -1,0 +1,118 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Comment;
+
+class CommentController extends Controller
+{
+    //get all comments
+    public function index($id)
+    {
+        $post = Post::find($id);
+
+        if(!$post)
+        {
+            return response([
+                'message' => 'Post not found',
+            ], 404);
+        }
+
+        return response([
+            'comments' => $post->comments()->with('user:id,name,image')->get()
+        ], 200);
+    }
+
+    //create a comment
+    public function store(Request $request, $id)
+    {
+        $post = Post::find($id);
+
+        if(!$post)
+        {
+            return response([
+                'message' => 'Post not found',
+            ], 404);
+        }
+
+
+        //validate fields
+        $attrs = $request->validate([
+            'comment'=>'required|string',
+        ]);
+
+        Comment::create([
+            'comment' => $attrs['comment'],
+            'post_id' => $post->id,
+            'user_id' => auth()->user()->id
+        ]);
+
+        return response([
+            'message' => 'Comment created',
+        ], 201);
+    }
+
+
+    // Update a comment
+    public function update(Request $request, $id)
+    {
+        $comment = Comment::find($id);
+
+        if(!$post)
+        {
+            return response([
+                'message' => 'Comment not found',
+            ], 404);
+        }
+
+        if($comment->user_id != auth()->user()->id)
+        {
+            return response([
+                'message' => 'Permission Denied.',
+            ], 401);
+        }
+        
+        //validate fields
+        $attrs = $request->validate([
+            'comment'=>'required|string',
+        ]);
+
+        $comment->update([
+            'comment' => $attrs['comment'],
+        ]);
+
+        return response([
+            'message' => 'Comment updated',
+        ], 200);
+    }
+
+
+    //delete a comment
+    public function destroy($id)
+    {
+        $comment = Comment::find($id);
+
+        if(!$comment)
+        {
+            return response([
+                'message' => 'Comment not found',
+            ], 404);
+        }
+        
+        if($comment->user_id != auth()->user()->id)
+        {
+            return response([
+                'message' => 'Permission Denied.',
+            ], 401);
+        }
+        
+        $comment->delete();
+
+        return response([
+            'message' => 'Comment deleted',
+        ], 200);
+    }
+}
