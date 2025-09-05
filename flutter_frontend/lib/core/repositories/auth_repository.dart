@@ -5,7 +5,7 @@ import '../models/user.dart';
 import '../models/auth_response.dart';
 
 class AuthRepository {
-  static const String _baseUrl = 'http://172.16.1.71:8888/api';
+  static const String _baseUrl = 'http://127.0.0.1:8888/api';
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'user_data';
 
