@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../Auth/bloc/auth_bloc.dart';
 import '../../Auth/bloc/auth_event.dart';
 import '../../Auth/bloc/auth_state.dart';

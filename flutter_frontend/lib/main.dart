@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/repositories/auth_repository.dart';
+import 'core/theme/app_theme.dart';
 import 'src/Auth/bloc/auth_bloc.dart';
 import 'src/Auth/bloc/auth_event.dart';
 import 'src/Auth/bloc/auth_state.dart';
@@ -26,10 +27,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Laravel Blog App',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          useMaterial3: true,
-        ),
+        theme: AppTheme.lightTheme,
         home: const AuthWrapper(),
         routes: {
           '/login': (context) => const LoginScreen(),

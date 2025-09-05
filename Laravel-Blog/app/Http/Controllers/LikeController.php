@@ -38,6 +38,7 @@ class LikeController extends Controller
         }
         //else dislike it
         $like->delete();
+
         return response([
             'message' => 'Unliked'
         ], 200);
